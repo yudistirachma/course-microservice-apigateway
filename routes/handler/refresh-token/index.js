@@ -1,7 +1,5 @@
-const create = require('./create')
-const getRefreshToken = require('./getRefreshToken')
+const refreshToken = require('./refreshToken')
 
 module.exports = {
-    create,
-    getRefreshToken
+    refreshToken
 }

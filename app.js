@@ -12,6 +12,9 @@ const coursesRouter = require('./routes/courses');
 const ordersRouter = require('./routes/orders');
 const refreshTokenRouter = require('./routes/refreshToken');
 
+// middleware
+const verifyToken = require('./middlewares/verifyToken');
+
 
 const app = express();
 
@@ -24,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/media', mediaRouter);
+app.use('/media', verifyToken, mediaRouter);
 app.use('/payments', paymentsRouter);
 app.use('/courses', coursesRouter);
 app.use('/orders', ordersRouter);
