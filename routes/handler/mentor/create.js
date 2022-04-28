@@ -1,24 +1,18 @@
 const apiAdapter = require('../../apiAdapter');
 // eslint-disable-next-line no-undef
-const { URL_SERVICE_USER } = process.env;
+const { URL_SERVICE_MENTOR } = process.env;
 
-const api = apiAdapter(URL_SERVICE_USER);
+const api = apiAdapter(URL_SERVICE_MENTOR);
 
 module.exports = async (req, res) => {
-  try {    
-    if (!req.user) {
-      throw { response : { status : 401, data : { message : 'Unauthorized' } } }
-    }
-    
-    const id = req.user.data.id
-    const user = await api.get(`/users/${id}`);
-
+  try {
+    const user = await api.post('/mentors', req.body);
     return res.json(user.data);
   } catch (error) {
     if (error.code === 'ECONNREFUSED') {
       return res.status(500).json({ status: false, message: 'service unavailable' });
     }
-      
+
     const { status, data } = error.response;
     return res.status(status).json(data);
   } 
