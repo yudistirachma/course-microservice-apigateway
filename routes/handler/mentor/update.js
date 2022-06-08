@@ -1,8 +1,8 @@
 const apiAdapter = require('../../apiAdapter');
 // eslint-disable-next-line no-undef
-const { URL_SERVICE_MENTOR } = process.env;
+const { URL_SERVICE_COURSE } = process.env;
 
-const api = apiAdapter(URL_SERVICE_MENTOR);
+const api = apiAdapter(URL_SERVICE_COURSE);
 
 module.exports = async (req, res) => {
   try {

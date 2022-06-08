@@ -6,13 +6,21 @@ const api = apiAdapter(URL_SERVICE_COURSE);
 
 module.exports = async (req, res) => {
   try {
-    const mentor = await api.delete(`/mentors/${req.params.id}`);
-    return res.json(mentor.data);
+    const course = await api.get(`/courses`, {
+      params: {
+        search: req.query.search,
+        status: req.query.status,
+        type: req.query.type,
+        level: req.query.level,
+      },
+    });
+
+    return res.json(course.data);
   } catch (error) {
     if (error.code === 'ECONNREFUSED') {
       return res.status(500).json({ status: false, message: 'service unavailable' });
     }
-
+      
     const { status, data } = error.response;
     return res.status(status).json(data);
   } 

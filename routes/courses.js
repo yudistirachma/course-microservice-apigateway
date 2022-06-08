@@ -1,10 +1,14 @@
-var express = require('express');
-var router = express.Router();
-const { APP_NAME } = process.env;
+const express = require('express');
+const router = express.Router();
+const courseHandler = require('./handler/course');
+const verifyToken = require('../middlewares/verifyToken');
+const can = require('../middlewares/permission');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send(APP_NAME);
-});
+router.get('/', courseHandler.getCourses);
+router.get('/:id', courseHandler.getCourse);
+
+router.post('/', verifyToken, can('admin'), courseHandler.create);
+router.put('/:id', verifyToken, can('admin'), courseHandler.update);
+router.delete('/:id', verifyToken, can('admin'), courseHandler.destroy);
 
 module.exports = router;
